@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 3.20)
-project(requests)
 
-find_package(Boost REQUIRED system container)
-find_package(OpenSSL REQUIRED)
-find_package(Threads REQUIRED)
+project(boost_requests)
 
-set(CMAKE_CXX_STANDARD 20)
+add_library(boost_requests INTERFACE)
+add_library(Boost::requests ALIAS boost_requests)
 
-add_compile_options(-fsanitize=address)
-add_link_options(-fsanitize=address)
+target_include_directories(boost_requests INTERFACE include)
+target_link_libraries(boost_requests
+    INTERFACE
+      Boost::boost
+)
 
 include_directories(include libs/url/include)
-
-add_subdirectory(test)
-add_subdirectory(example)
